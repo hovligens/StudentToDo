@@ -1,6 +1,9 @@
+
+
 from flask import Flask, render_template, request, redirect, url_for
 import json
 import os
+from datetime import datetime
 
 app= Flask(__name__)
 FILNAVN= "oppgaver.json"
@@ -17,6 +20,15 @@ def skriv_oppgaver(oppgaver):
     with open(FILNAVN,"w", encoding="utf-8") as f:
         json.dump(oppgaver, f,indent=4, ensure_ascii=False)
 
+#prioritet 2, sortere liste etter frist
+
+def finn_dato(datestr):
+    return datetime.strptime(datestr,"%Y-%m-%d")
+
+def sorter_oppgaver(oppgaver):
+    return sorted(oppgaver, key=lambda o:finn_dato(o["frist"]))
+
+
 @app.route("/", methods=["GET", "POST"])
 def home():
     oppgaver = les_oppgaver()
@@ -30,6 +42,7 @@ def home():
             skriv_oppgaver(oppgaver)
         return redirect(url_for("home"))
     
+    oppgaver=sorter_oppgaver(oppgaver)
     
     return render_template("index.html", oppgaver=oppgaver)
     
