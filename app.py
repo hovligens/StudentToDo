@@ -38,7 +38,7 @@ def home():
         frist=request.form.get("frist")
 
         if tittel and frist:
-            oppgaver.append({"tittel":tittel,"frist":frist})
+            oppgaver.append({"tittel":tittel,"frist":frist,"ferdig":False})
             skriv_oppgaver(oppgaver)
         return redirect(url_for("home"))
     
@@ -54,5 +54,14 @@ def fjern(index):
         oppgaver.pop(index)
         skriv_oppgaver(oppgaver)
     return redirect(url_for("home"))
+
+@app.route("/status/<int:index>")
+def status(index):
+    oppgaver=les_oppgaver()
+    if 0<=index<len(oppgaver):
+        oppgaver[index]["ferdig"]= not oppgaver[index]["ferdig"]
+        skriv_oppgaver(oppgaver)
+    return redirect(url_for("home"))
+
 if __name__== "__main__":
     app.run(debug=True)

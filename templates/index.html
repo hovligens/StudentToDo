@@ -5,6 +5,7 @@
 
     <title>Student To Do</title> 
 
+    <link rel="stylesheet" href="{{url_for("static", filename="style.css")}}">
 </head>
 <body>
     <h1>Student To Do App- Del 1</h1>
@@ -26,8 +27,10 @@
     <ul>
         {% for oppgave in oppgaver %}
         <li>
-            {{oppgave.tittel}}-{{oppgave.frist}}
-            <a href="{{ url_for( "fjern", index=loop.index0)}}">Fjern</a>
+            <span class="{{'ferdig' if oppgave.ferdig else 'uferdig'}}">
+            {{oppgave.tittel}}-{{oppgave.frist}}</span>
+            <a href="{{url_for('status', index=loop.index0)}}">Bytt status</a>
+            <a href="{{url_for('fjern', index=loop.index0)}}">Fjern</a>
         </li>
         {% else %}
         <li>Ingen Oppgaver Enda</li>
