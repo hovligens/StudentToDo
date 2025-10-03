@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Student To Do</title> 
+
+</head>
+<body>
+    <h1>Student To Do App- Del 1</h1>
+
+    <h2>Legg til ny oppgave</h2>
+
+    <form method="POST">
+        <label for ="tittel">Tittel:</label>
+        <input type="text" id="tittel" name="tittel" required>
+
+        <label for="frist">Frist:</label>
+        <input type="date" id="frist" name="frist" required>
+
+        <button type="submit">Legg til</button>
+    
+    <h2>Dine Oppgaver</h2>
+    
+    <ul>
+        {% for oppgave in oppgaver %}
+        <li>
+            {{oppgave.tittel}}-{{oppgave.frist}}
+            <a href="{{ url_for( "fjern", index=loop.index0)}}">Fjern</a>
+        </li>
+        {% else %}
+        <li>Ingen Oppgaver Enda</li>
+        {% endfor %}
+    </ul>
+    
+</body>
+</html>
