@@ -29,10 +29,10 @@ def home():
         filtrerte = oppgaver
 
 
-    varslinger= services.varslinger(dager=3)
+    varslinger= services.varslinger_fra_liste(oppgaver, dager=3)
     kalender = services.neste_7_dager_gruppe(filtrerte)
     
-    return render_template("index.html", oppgaver=oppgaver, varslinger=varslinger,kalender=kalender,filter_val=f )
+    return render_template("index.html", oppgaver=filtrerte, varslinger=varslinger,kalender=kalender,filter_val=f )
 
     
 
@@ -46,6 +46,13 @@ def fjern(index):
 def status(index):
     services.status(index)
     return redirect(url_for("home"))
+
+
+@app.route("/snooze/<int:index>")
+def snooze(index):
+    services.snooze(index, days=1)
+    return redirect(url_for("home"))
+
 
 if __name__== "__main__":
     app.run(debug=True)
