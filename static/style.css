@@ -34,3 +34,33 @@
     from {opacity: 1; }
     to {opacity: .8;}
 }
+
+.calendar .grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 1rem;
+}
+.day-header {
+    display: flex;
+    justify-content: spece-between;
+    font-weight: 600;
+}
+
+.calendar article{
+    background: var(--card-bg, #ffffff);
+    padding: 0.8rem;
+    border-radius: 0.8rem;
+    box-shadow: 0 1px 3px rgb(0 0 0 /0.07);
+}
+
+.calendar .mini-list li {
+    padding: 0.2rem 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+}
+.calendar .mini-list li:last-child {
+    border-bottom: none;
+}
+.day-header{
+    margin-bottom: 0.4rem;
+}
