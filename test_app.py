@@ -1,35 +1,19 @@
-
-#test for assignment 2 
-from app import app
-
-def test_homepage_loads():
-    client=app.test_client()
-    response=client.get("/")
-    assert response.status_code ==200
-
-
-#test for assignmest 3 
+#test for assignment 4. 
 
 import services
-import json
-from datetime import date, timedelta
-import os 
+from datetime import date
+ 
 
-def test_snooze_function(tmp_path):
-    test_fil=tmp_path/ "test_oppgaver.json"
-    services.FILNAVN = str(test_fil)
+def test_sqlite_basic (tmp_path):
+    db_fil = tmp_path / "test_basic.db"
+    services.DB_FIL = str(db_fil)
 
-    idag=date.today().isoformat()
-    oppgave = {"tittel": "Test", "frist": idag, "ferdig" :False}
-    with open (test_fil,"w", encoding="utf-8") as f:
-        json.dump([oppgave], f, indent=4)
+    services.init_db()
 
-    services.snooze(0, days=1)
+    i_dag = date.today().isoformat()
+    services.legg_til_oppgaver("Testoppgave", i_dag)
 
-    with open(test_fil, "r", encoding="utf-8") as f: 
-        oppgaver=json.load(f)
-    
-    ny_frist= oppgaver[0]["frist"]
-    forventet_dato= (date.today()+ timedelta(days=1)).isoformat()
+    oppgaver = services.les_oppgaver()
 
-    assert ny_frist == forventet_dato
+    assert len(oppgaver) == 1
+    assert oppgaver[0]["tittel"]== "Testoppgave"

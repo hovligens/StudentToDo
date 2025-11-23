@@ -1,9 +1,13 @@
 
 
 from flask import Flask, render_template, request, redirect, url_for
-import services
+from models import services
 
-app= Flask(__name__)
+app= Flask(
+    __name__,
+    template_folder="../views",
+    static_folder="../static"
+)
 
 @app.route("/", methods=["GET", "POST"])
 def home():
