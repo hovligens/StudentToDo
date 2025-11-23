@@ -3,3 +3,4 @@ __pychach__/
 *.pyo
 .DS_Store
 .pytest_cache/
+*.db
