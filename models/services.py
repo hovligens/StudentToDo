@@ -121,7 +121,7 @@ def snooze(index: int, days: int = 1 ):
     row = rows[index]
     ny_frist = add_days(row["frist"], days)
 
-    cur.execute("UPDATE oppgaver SET first = ? WHERE id = ?", (ny_frist,row["id"]))
+    cur.execute("UPDATE oppgaver SET frist = ? WHERE id = ?", (ny_frist,row["id"]))
     conn.commit()
     conn.close()
 
